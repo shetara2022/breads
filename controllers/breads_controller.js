@@ -4,19 +4,29 @@ const Bread = require('../models/bread.js')
 const Baker = require('../models/baker.js')
 
 // INDEX
-breads.get('/', (req, res) => {
-    Baker.find()
-        .then(foundBakers => {
-            Bread.find()
-                .then(foundBreads => {
-                    res.render('index', {
-                        breads: foundBreads,
-                        bakers: foundBakers,
-                        title: 'Index Page'
-                    })
-                })
-        })
-})
+breads.get('/', async (req, res) => {
+    const foundBakers = await Baker.find()
+    const foundBreads = await Bread.find().limit(10) //limit shows the specified amount
+    res.render('index', {
+      breads: foundBreads,
+      bakers: foundBakers,
+      title: 'Index Page'
+    })
+  })
+  
+// breads.get('/', (req, res) => {
+//     Baker.find()
+//         .then(foundBakers => {
+//             Bread.find()
+//                 .then(foundBreads => {
+//                     res.render('index', {
+//                         breads: foundBreads,
+//                         bakers: foundBakers,
+//                         title: 'Index Page'
+//                     })
+//                 })
+//         })
+// })
 
 
 //NEW ROUTE
